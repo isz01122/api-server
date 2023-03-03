@@ -22,9 +22,10 @@ const updatePost = async (
   }
 };
 
-const findPostList = async (): Promise<PostResponseDto[] | null> => {
+const findPostList = async (cursor): Promise<PostResponseDto[] | null> => {
   try {
-    const post = await Post.find();
+    const limit = 5;
+    const post = await Post.find().skip(cursor).limit(limit);
     if (!post) {
       return null;
     }

@@ -8,7 +8,8 @@ import { PostUpdateDto } from "../interfaces/post/PostUpdateDto";
 
 const findPostList = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data = await PostService.findPostList();
+    const cursor = req.query.cursor ? Number(req.query.cursor) : 0;
+    const data = await PostService.findPostList(cursor);
     res
       .status(statusCode.CREATED)
       .send(util.success(statusCode.OK, message.READ_POST_SUCCESS, data));
