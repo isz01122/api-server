@@ -19,7 +19,8 @@ const findPostList = async (req: Request, res: Response): Promise<void> => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR,
+          error
         )
       );
   }
@@ -40,7 +41,8 @@ const findPost = async (req: Request, res: Response): Promise<void> => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR,
+          error
         )
       );
   }
@@ -62,7 +64,8 @@ const createPost = async (req: Request, res: Response): Promise<void> => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR,
+          error
         )
       );
   }
@@ -83,7 +86,8 @@ const updatePost = async (req: Request, res: Response): Promise<void> => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR,
+          error
         )
       );
   }
@@ -103,7 +107,8 @@ const deletePost = async (req: Request, res: Response): Promise<void> => {
       .send(
         util.fail(
           statusCode.INTERNAL_SERVER_ERROR,
-          message.INTERNAL_SERVER_ERROR
+          message.INTERNAL_SERVER_ERROR,
+          error
         )
       );
   }

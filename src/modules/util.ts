@@ -1,16 +1,13 @@
 const util = {
   success: (status: number, message: string, data?: any) => {
     return {
-      status,
-      success: true,
-      message,
-      data,
+      result: data,
     };
   },
-  fail: (status: number, message: string, data?: any) => {
+  fail: (status: number, message: string, error: any) => {
     return {
+      error,
       status,
-      success: false,
       message,
     };
   },
