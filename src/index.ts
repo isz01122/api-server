@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
 import config from "./config";
 import connectDB from "./loaders/db";
 import routes from "./routes";
@@ -9,6 +10,9 @@ connectDB();
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// CORS 설정
+app.use(cors());
 
 //라우터 분리
 app.use(routes);
