@@ -14,5 +14,5 @@ API server Node.js
 
 `sample test`
 
-- 게시글 리스트 : https://port-0-api-server-ll32glc24f081.gksl2.cloudtype.app/post
-- 게시글 상세 : https://port-0-api-server-ll32glc24f081.gksl2.cloudtype.app/post/:postId
+- 게시글 리스트 : /v1/post
+- 게시글 상세 : /v1/post/:id
