@@ -25,7 +25,9 @@ const updatePost = async (
 const findPostList = async (cursor): Promise<PostResponseDto[] | null> => {
   try {
     const limit = 5;
-    const post = await Post.find().skip(cursor).limit(limit);
+    const post = await Post.find(cursor ? { id: { $lt: cursor } } : {})
+      .sort({ id: -1 })
+      .limit(limit);
     if (!post) {
       return null;
     }
