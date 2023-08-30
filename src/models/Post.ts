@@ -18,17 +18,9 @@ const PostSchema = new mongoose.Schema({
     required: true,
     default: Date.now,
   },
-})
-  .plugin(AutoIncrement, {
-    id: "id_seq",
-    inc_field: "id",
-  })
-  .set("toJSON", {
-    virtuals: true,
-    versionKey: false,
-    transform: function (doc, ret) {
-      delete ret._id;
-    },
-  });
+}).plugin(AutoIncrement, {
+  id: "id_seq",
+  inc_field: "id",
+});
 
 export default mongoose.model<PostInfo & mongoose.Document>("Post", PostSchema);

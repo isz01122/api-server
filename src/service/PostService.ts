@@ -1,4 +1,6 @@
 import Post from "../models/Post";
+import statusCode from "../modules/statusCode";
+import message from "../modules/responseMessage";
 import { PostBaseResponseDto } from "../interfaces/common/PostBaseResponseDto";
 import { PostCreateDto } from "../interfaces/post/PostCreateDto";
 import { PostResponseDto } from "../interfaces/post/PostResponseDto";
@@ -25,9 +27,13 @@ const updatePost = async (
 const findPostList = async (cursor): Promise<PostResponseDto[] | null> => {
   try {
     const limit = 5;
-    const post = await Post.find(cursor ? { id: { $lt: cursor } } : {})
+    const query = cursor ? { id: { $lt: cursor } } : {};
+    const post = await Post.find(query)
       .sort({ id: -1 })
-      .limit(limit);
+      .select({ _id: 0, __v: 0 })
+      .limit(limit)
+      .lean()
+      .exec();
     if (!post) {
       return null;
     }
@@ -40,9 +46,15 @@ const findPostList = async (cursor): Promise<PostResponseDto[] | null> => {
 
 const findPost = async (postId: string): Promise<PostResponseDto | null> => {
   try {
-    const post = await Post.findOne({ id: postId });
+    const post = await Post.findOne({ id: postId })
+      .select({ _id: 0, __v: 0 })
+      .lean()
+      .exec();
     if (!post) {
-      return null;
+      throw {
+        code: statusCode.NOT_FOUND,
+        message: message.NOT_FOUND,
+      };
     }
     return post;
   } catch (error) {
@@ -63,11 +75,12 @@ const createPost = async (
 
     await post.save();
 
-    const data = {
-      _id: post.id,
-    };
+    const createdPost = await Post.findOne({ _id: post._id })
+      .select({ _id: 0, __v: 0 })
+      .lean()
+      .exec();
 
-    return data;
+    return createdPost;
   } catch (error) {
     console.log(error);
     throw error;
@@ -76,7 +89,10 @@ const createPost = async (
 
 const deletePost = async (postId: string): Promise<PostResponseDto | null> => {
   try {
-    const post = await Post.findOneAndDelete({ id: postId });
+    const post = await Post.findOneAndDelete({ id: postId })
+      .select({ _id: 0, __v: 0 })
+      .lean()
+      .exec();
     if (!post) {
       return null;
     }
